@@ -110,7 +110,7 @@
                   cnt++;
                 }
                 for(int y = num2 - 1; y >= 0; y--){
-                    out.println("<p>" + bbcnum[y] + "@" + bbctimestr[y] + " -- " + bbcmsg[y] + "<br>from " + bbcip[y] + "</p>");
+                    out.println("<p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + "  from " + bbcip[y] + "</p>");
                     //out.println("yは" + y + "です<br>");
                 }
             }
