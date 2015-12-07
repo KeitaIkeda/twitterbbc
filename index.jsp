@@ -1,6 +1,8 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.regex.*" %><!DOCTYPE html>
+<%@page import="java.util.*" %>
+<%@page import="java.text.SimpleDateFormat" %>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -35,24 +37,38 @@
       if(!(bbc == null)){
         m = p.matcher(bbc);
       }*/
+      //以下投稿内容をデータベースへアップデート
       if(!(bbc == null)){//投稿があったなら
         while(rs1.next()){//numに最終番号の次の番号を代入
           num = rs1.getInt("num");
           num++;
         }
-        String upsql = "insert into bbc (num, msg, ip) values (" + num + ", '" + bbc + "', '" + ip + "');";
+        //投稿日時を取得
+        Calendar cal = Calendar.getInstance();
+        int cal_year = cal.get(Calendar.YEAR);
+        int cal_month = cal.get(Calendar.MONTH) + 1;
+        int cal_day = cal.get(Calendar.DATE);
+        int cal_hour = cal.get(Calendar.HOUR_OF_DAY);
+        int cal_minute = cal.get(Calendar.MINUTE);
+        int cal_second = cal.get(Calendar.SECOND);
+        String cal_sql = cal_year + "/" + cal_month + "/" + cal_day + " " + cal_hour + ":" + cal_minute + ":" + cal_second;
+        //SQL文を作成
+        String upsql = "insert into bbc (num, msg, ip, date) values (" + num + ", '" + bbc + "', '" + ip + "', '" + cal_sql + "');";
         dbuprs = stmt.executeUpdate(upsql);
         rs1 = stmt.executeQuery("select * from bbc;");
       }/* else if (!(bbc == null) && (bbc.equals("--help--"))){
         helpmsg = "ヘルプを表示します。";
         helpflg = 1;
       }*/
+
       while(rs1.next()){
         num2 = rs1.getInt("num");
       }
       int bbcnum[] = new int[num2];
       String bbcmsg[] = new String[num2];
       String bbcip[] = new String[num2];
+      Timestamp bbctime[] = new Timestamp[num2];
+      String bbctimestr[] = new String[num2];
       %>
       <script>
       window.onload = function(){
@@ -87,10 +103,12 @@
                   bbcnum[cnt] = rs1.getInt("num");
                   bbcmsg[cnt] = rs1.getString("msg");
                   bbcip[cnt] = rs1.getString("ip");
+                  bbctime[cnt] = rs1.getTimestamp("date");
+                  bbctimestr[cnt] = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(bbctime[cnt]);
                   cnt++;
                 }
                 for(int y = num2 - 1; y >= 0; y--){
-                    out.println("<p>" + bbcnum[y] + " -- " + bbcmsg[y] + " from " + bbcip[y] + "</p>");
+                    out.println("<p>" + bbcnum[y] + "@" + bbctimestr[y] + " -- " + bbcmsg[y] + "<br>from " + bbcip[y] + "</p>");
                     //out.println("yは" + y + "です<br>");
                 }
             }
