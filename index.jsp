@@ -9,12 +9,11 @@
       <meta content="width=device-width, initial-scale=1, user-scalable=no" name=viewport>
         <%
       //POSTフォームデータ受信"bbc"へ代入
-      String bbc = null,ip = null,dbgbbc = null;;
+      String bbc = null,ip = null;
       request.setCharacterEncoding("UTF-8");
       if(!(request.getParameter("bbcfm") == null)){
         bbc = request.getParameter("bbcfm");
         ip = request.getRemoteAddr();
-        dbgbbc = bbc;
       }
       if(!(bbc == null)){
         out.println("<title>TwitterBBC -" + bbc + "-</title>");
@@ -73,6 +72,9 @@
       <script>
       window.onload = function(){
         document.bbc.bbcfm.focus();
+        setTimeout(function(){
+          window.location.reload(true);
+        }, 8000);
       }
       </script>
       </head>
@@ -123,7 +125,6 @@
                 String url = "index.jsp?rd=t";
                 response.sendRedirect(url);
               }
-              out.println(dbgbbc);
               rs1.close();
               stmt.close();
               %>
