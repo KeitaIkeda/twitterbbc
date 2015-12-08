@@ -75,13 +75,12 @@
           <script>
             window.onload = function () {
               document.bbc.bbcfm.focus(); //ページロード時にフォームへカーソルをフォーカス
-              /*
-                                    8秒ごとにリロード
-                                    リクエストが多数発生するため手法を要件等
-                                    */
+              /*8秒ごとにリロード
+              リクエストが多数発生するため手法を要件等
+              */
               setTimeout(function () {
                 window.location.reload(true);
-              }, 8000);
+              }, 10000);
             }
           </script>
         </head>
@@ -113,7 +112,7 @@
                        bbctimestr[cnt] = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(bbctime[cnt]); cnt++;
                      }
                      for(int y=n um2 - 1; y>= 0; y--){
-                       out.println("<p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + " from " + bbcip[y] + "</p>");
+                       out.println("<div class="bbc"><p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + " from " + bbcip[y] + "</p></div>");
                      }
                    }
                    //コネクションをクローズ
