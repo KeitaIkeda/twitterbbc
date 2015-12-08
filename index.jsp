@@ -59,7 +59,7 @@
           //SQL文を作成
           String upsql = "insert into bbc (num, msg, ip, date) values (" + num + ", '" + bbc + "', '" + ip + "', '" + cal_sql + "');";
           dbuprs = stmt.executeUpdate(upsql);
-          rs1 = stmt.executeQuery( "select * from bbc;");
+          rs1 = stmt.executeQuery("select * from bbc;");
         }/*else if (!(bbc==n ull) && (bbc.equals( "--help--"))){
           helpmsg = "ヘルプを表示します。";
           helpflg=1;
@@ -109,7 +109,7 @@
                      while(rs1.next()){
                        bbcnum[cnt] = rs1.getInt("num");
                        bbcmsg[cnt] = rs1.getString("msg");
-                       bbcip[cnt] = rs1.getString( "ip");
+                       bbcip[cnt] = rs1.getString("ip");
                        bbctime[cnt] = rs1.getTimestamp("date");
                        bbctimestr[cnt] = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(bbctime[cnt]); cnt++;
                      }
