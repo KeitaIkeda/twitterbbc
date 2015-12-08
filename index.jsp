@@ -114,7 +114,7 @@
                        bbctimestr[cnt] = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(bbctime[cnt]); cnt++;
                      }
                      for(int y = num2 - 1; y >= 0; y--){
-                       out.println("<div class="bbc"><p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + " from " + bbcip[y] + "</p></div>");
+                       out.println("<div class='bbc'><p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + " from " + bbcip[y] + "</p></div>");
                      }
                    }
                    //コネクションをクローズ
