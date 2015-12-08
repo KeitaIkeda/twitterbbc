@@ -117,6 +117,10 @@
                        out.println("<div class='bbc'><p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + " from " + bbcip[y] + "</p></div>");
                      }
                    }
+                   //コネクションをクローズ
+                   rs1.close();
+                   stmt.close();
+                   conn.close();
                    //ページ更新対策
                    String rd;
                    rd = request.getParameter("rd");
@@ -127,9 +131,6 @@
                      String url = "index.jsp?rd=t";
                      response.sendRedirect(url);
                    }
-                   //コネクションをクローズ
-                   rs1.close();
-                   stmt.close();
                    %>
                 </article>
                 <footer>
