@@ -1,13 +1,14 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 <%@page import="java.sql.*" %>
-<%@page import="java.util.regex.*" %><!DOCTYPE html>
+<%@page import="java.util.regex.*" %>
 <%@page import="java.util.*" %>
 <%@page import="java.text.SimpleDateFormat" %>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
       <meta content="width=device-width, initial-scale=1, user-scalable=no" name=viewport>
-        <%
+      <%
       //POSTフォームデータ受信"bbc"へ代入
       String bbc = null,ip = null;
       request.setCharacterEncoding("UTF-8");
@@ -28,6 +29,7 @@
       int dbuprs;//DB更新用の戻り値変数
       int num = 1, num2 = 0;//汎用int変数
       rs1 = stmt.executeQuery("select * from bbc;");
+      //コマンド設定未完成
       /*String regex = "--.*--";
       Pattern p = Pattern.compile(regex);
       Matcher m = null;
@@ -36,6 +38,7 @@
       if(!(bbc == null)){
         m = p.matcher(bbc);
       }*/
+
       //以下投稿内容をデータベースへアップデート
       if(!(bbc == null)){//投稿があったなら
         while(rs1.next()){//numに最終番号の次の番号を代入
@@ -69,14 +72,18 @@
       Timestamp bbctime[] = new Timestamp[num2];
       String bbctimestr[] = new String[num2];
       %>
-      <script>
-      window.onload = function(){
-        document.bbc.bbcfm.focus();
-        setTimeout(function(){
-          window.location.reload(true);
-        }, 8000);
-      }
-      </script>
+        <script>
+          window.onload = function () {
+            document.bbc.bbcfm.focus(); //ページロード時にフォームへカーソルをフォーカス
+            /*
+            8秒ごとにリロード
+            リクエストが多数発生するため手法を要件等
+            */
+            setTimeout(function () {
+              window.location.reload(true);
+            }, 8000);
+          }
+        </script>
       </head>
 
       <body>
@@ -92,12 +99,8 @@
               out.println("<p>まだ投稿はありません。今すぐ投稿を行って初めての投稿者になりましょう！</p>");
             }
 
-            /*if(helpflg == 1){
-              out.println("<p>" + helpmsg + "</p>");
-            }*/
-
             //再度データベースをすべて取得しwhile文ですべて出力
-            //要改良→新しいものから上から表示すること。
+            //要改良→新しいものから上から表示すること。→12/6 実装済
             if(!(num2 == 0)){
               rs1 = stmt.executeQuery("select * from bbc;");
               int cnt = 0;
@@ -111,9 +114,12 @@
                 }
                 for(int y = num2 - 1; y >= 0; y--){
                     out.println("<p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + "  from " + bbcip[y] + "</p>");
-                    //out.println("yは" + y + "です<br>");
                 }
             }
+            
+            //コネクションをクローズ
+            rs1.close();
+            stmt.close();
 
               //ページ更新対策
               String rd;
@@ -125,8 +131,6 @@
                 String url = "index.jsp?rd=t";
                 response.sendRedirect(url);
               }
-              rs1.close();
-              stmt.close();
               %>
             </body>
 
