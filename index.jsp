@@ -41,10 +41,11 @@
       }
       */
       //以下投稿内容をデータベースへアップデート
-      if(!(bbc==n ull)){//投稿があったなら
+      if(!(bbc == null)){//投稿があったなら
         while(rs1.next()){
           //numに最終番号の次の番号を代入
-          num=r s1.getInt( "num"); num++;
+          num = rs1.getInt("num");
+          num++;
         }
           //投稿日時を取得
           Calendar cal = Calendar.getInstance();
@@ -93,17 +94,18 @@
                   <input formmethod="post" id="fm" type="submit" value="投稿しような"></form>
                 </div>
                 <article>
-                  <% //投稿の有無を確認する
-                  rs1=s tmt.executeQuery( "select * from bbc;");
-                  boolean isExists=r s1.next();
+                  <%
+                  //投稿の有無を確認する
+                  rs1 = stmt.executeQuery("select * from bbc;");
+                  boolean isExists = rs1.next();
                   if(!(isExists)){
                     out.println( "<p>まだ投稿はありません。今すぐ投稿を行って初めての投稿者になりましょう！</p>");
                   }
                   //再度データベースをすべて取得しwhile文ですべて出力
                   //要改良→新しいものから上から表示すること。→12/6 実装済
-                  if(!(num2==0 )){
-                    rs1=s tmt.executeQuery( "select * from bbc;");
-                     int cnt=0;
+                  if(!(num2==0)){
+                    rs1 = stmt.executeQuery( "select * from bbc;");
+                     int cnt = 0;
                      while(rs1.next()){
                        bbcnum[cnt] = rs1.getInt("num");
                        bbcmsg[cnt] = rs1.getString("msg");
@@ -111,7 +113,7 @@
                        bbctime[cnt] = rs1.getTimestamp("date");
                        bbctimestr[cnt] = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(bbctime[cnt]); cnt++;
                      }
-                     for(int y=n um2 - 1; y>= 0; y--){
+                     for(int y = num2 - 1; y >= 0; y--){
                        out.println("<div class="bbc"><p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + " from " + bbcip[y] + "</p></div>");
                      }
                    }
