@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, user-scalable=no" name=viewport>
+    <title>TwitterBBC</title>
+
+    <script>
+        window.onload = function () {
+            document.bbc.bbcfm.focus();
+            setTimeout(function () {
+                window.location.reload(true);
+            }, 8000);
+        }
+    </script>
+</head>
+
+<body>
+    <form action="index.jsp" name="bbc">
+        <input name="bbcfm" type="text">
+        <input formmethod="post" id="fm" type="submit" value="投稿しような">
+    </form>
+    <br>
+    <p>2 -- こんにちは
+        <br>2015/12/08 13:12:46 from 0:0:0:0:0:0:0:1</p>
+    <p>1 -- a
+        <br>2015/12/08 13:12:42 from 0:0:0:0:0:0:0:1</p>
+
+</body>
+
+</html>
