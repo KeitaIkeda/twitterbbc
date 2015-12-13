@@ -21,9 +21,9 @@
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/twitterbbc", "twitterbbc", "twitterbbc");
         Statement stmt = conn.createStatement();
-        ResultSet rs1, rs2;//DBデータ取得戻り値用変数
+        ResultSet rs1, ct1;//DBデータ取得戻り値用変数
         int dbuprs;//DB更新用の戻り値変数
-        int num = 1, num2 = 0;//汎用int変数
+        int num = 100, num2 = 0;//汎用int変数
         rs1 = stmt.executeQuery("select * from bbc;");
         //コマンド設定未完成
         /*String regex="--.*--";
@@ -35,14 +35,17 @@
         m = p.matcher(bbc);
       }
       */
+      ct1 = stmt.executeQuery("select count(*) as cnt from bbc;");
+      ct1.next();
+      num = ct1.getInt("cnt");
+
       //以下投稿内容をデータベースへアップデート
       if(!(bbc == null)){//投稿があったなら
-        while(rs1.next()){
-          //numに最終番号の次の番号を代入
-          num = rs1.getInt("num");
-          num++;
-        }
-          //投稿日時を取得
+        /*現在の行数より1つ多い数字をnumカラムへ代入する役目と
+        63行目からの配列宣言で投稿がないなら現在のままの行数、投稿があればDB更新後の行数となるようにしている
+        */
+        num = num + 1;
+        //投稿日時を取得
           Calendar cal = Calendar.getInstance();
           int cal_year = cal.get(Calendar.YEAR);
           int cal_month = cal.get(Calendar.MONTH) + 1;
@@ -59,20 +62,18 @@
           helpmsg = "ヘルプを表示します。";
           helpflg=1;
         }*/
-        while(rs1.next()){
-          num2 = rs1.getInt("num");
-        }
-        int bbcnum[] = new int[num2];
-        String bbcmsg[] = new String[num2];
-        String bbcip[] = new String[num2];
-        Timestamp bbctime[] = new Timestamp[num2];
-        String bbctimestr[] = new String[num2];
+
+        int bbcnum[] = new int[num];
+        String bbcmsg[] = new String[num];
+        String bbcip[] = new String[num];
+        Timestamp bbctime[] = new Timestamp[num];
+        String bbctimestr[] = new String[num];
         %>
           <script>
             window.onload = function () {
               document.bbc.bbcfm.focus(); //ページロード時にフォームへカーソルをフォーカス
               /*8秒ごとにリロード
-              リクエストが多数発生するため手法を要件等
+              リクエストが多数発生するため手法を要検討
               */
               /*setTimeout(function () {
                 window.location.reload(true);
@@ -113,21 +114,23 @@
                   }
                   //再度データベースをすべて取得しwhile文ですべて出力
                   //要改良→新しいものから上から表示すること。→12/6 実装済
-                  if(!(num2==0)){
-                    rs1 = stmt.executeQuery( "select * from bbc;");
+                  if(!(num==0)){
+                    rs1 = stmt.executeQuery("select * from bbc;");
                      int cnt = 0;
                      while(rs1.next()){
                        bbcnum[cnt] = rs1.getInt("num");
                        bbcmsg[cnt] = rs1.getString("msg");
                        bbcip[cnt] = rs1.getString("ip");
                        bbctime[cnt] = rs1.getTimestamp("date");
-                       bbctimestr[cnt] = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(bbctime[cnt]); cnt++;
+                       bbctimestr[cnt] = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(bbctime[cnt]);
+                       cnt++;
                      }
-                     for(int y = num2 - 1; y >= 0; y--){
+                     for(int y = num - 1; y >= 0; y--){
                        out.println("<div class='bbc'><p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + " from " + bbcip[y] + "</p></div>");
                      }
                    }
                    //コネクションをクローズ
+                   ct1.close();
                    rs1.close();
                    stmt.close();
                    conn.close();
@@ -142,6 +145,7 @@
                      response.sendRedirect(url);
                    }
                    %>
+                   <%=num %>
                 </article>
                 <footer>
                   <p>Copyright&copy;2015 Keita Ikeda All Rights Reserved</p>
