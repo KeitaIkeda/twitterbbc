@@ -1,5 +1,5 @@
 # twitterbbc
 index.jsp以外のファイルは基本的にデバグや実装予定の機能を試すために作られたものです。
-<a href="http://marchitec.com/twitterbbc/" target="_blank"></a><br>
+[TwitterBBC](http://marchitec.com/twitterbbc/)
 上記URLで公開していることがほとんどですが、サーバメンテナンス等諸理由によって公開を中止している場合があります。
 また、投稿は自由にできますが開発者によって事前に予告なく投稿が削除される場合があります。
