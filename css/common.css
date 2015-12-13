@@ -39,10 +39,10 @@ body {
         border: solid 1px #cccccc
     }
     .bbc:hover {
-        background-color: #fcf88e;
+        background-color: #ede98a;
         width: 330px;
-        margin-top: 5px;
-        margin-bottom: 5px;
+        /*margin-top: 5px;
+        margin-bottom: 5px;*/
     }
     footer {
         text-align: center;

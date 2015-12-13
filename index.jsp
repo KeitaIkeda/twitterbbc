@@ -145,7 +145,6 @@
                      response.sendRedirect(url);
                    }
                    %>
-                   <%=num %>
                 </article>
                 <footer>
                   <p>Copyright&copy;2015 Keita Ikeda All Rights Reserved</p>
