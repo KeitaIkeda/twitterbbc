@@ -1,8 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<%@page import="java.sql.*" %>
-<%@page import="java.util.regex.*" %>
-<%@page import="java.util.*" %>
-<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.sql.*,java.util.regex.*,java.util.*,java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,7 +11,7 @@
         //POSTフォームデータ受信 "bbc"へ代入
         String bbc = null,ip = null;
         request.setCharacterEncoding("UTF-8");
-        if(!(request.getParameter("bbcfm") == null)){
+        if(!(request.getParameter("bbcfm") == null) && !(request.getParameter("bbcfm") == "")){
           bbc = request.getParameter("bbcfm");
           bbc.trim();
           /*while(bbc.charAt(0) == "　"){
@@ -86,7 +83,6 @@
             var fmchk = function () {
               if (document.getElementsByTagName("input")[0].value == "") {
                 document.getElementsByTagName("output")[0].innerHTML = "投稿が未入力です。<br>投稿できません。";
-                console.log("あ");
                 return false;
               } else {
                 var str = document.getElementsByTagName("input")[0].value;
