@@ -88,9 +88,16 @@
                 document.getElementsByTagName("output")[0].innerHTML = "投稿が未入力です。<br>投稿できません。";
                 console.log("あ");
                 return false;
+              } else {
+                var str = document.getElementsByTagName("input")[0].value;
+                str = str.replace(/&/g, '&amp;');
+                str = str.replace(/</g, '&lt;');
+                str = str.replace(/>/g, '&gt;');
+                str = str.replace(/"/g, '&quot;');
+                str = str.replace(/'/g, '&#39;');
+                document.getElementsByTagName("input")[0].value = str;
               }
             }
-
           </script>
         </head>
 
