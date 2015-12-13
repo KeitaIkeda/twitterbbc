@@ -14,7 +14,7 @@
         //POSTフォームデータ受信 "bbc"へ代入
         String bbc = null,ip = null;
         request.setCharacterEncoding("UTF-8");
-        if(!(request.getParameter("bbcfm") == "") && !(request.getParameter("bbcfm") == null)){
+        if(!(request.getParameter("bbcfm") == null)){
           bbc = request.getParameter("bbcfm");
           bbc.trim();
           /*while(bbc.charAt(0) == "　"){
@@ -83,15 +83,24 @@
                 window.location.reload(true);
               }, 10000);*/
             }
+            var fmchk = function () {
+              if (document.getElementsByTagName("input")[0].value == "") {
+                document.getElementsByTagName("output")[0].innerHTML = "投稿が未入力です。<br>投稿できません。";
+                console.log("あ");
+                return false;
+              }
+            }
+
           </script>
         </head>
 
         <body>
           <div id="wrp">
             <div id="htmlfm">
-              <form action="index.jsp" name="bbc">
+              <form action="index.jsp" name="bbc" onsubmit="return fmchk();">
                 <input name="bbcfm" placeholder="今の気持ちは？" type="text">
                   <input formmethod="post" id="fm" type="submit" value="投稿しような"></form>
+                  <output></output>
                 </div>
                 <article>
                   <%
