@@ -5,22 +5,18 @@
 <%@page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
-
   <head>
     <meta charset="UTF-8">
       <meta content="width=device-width, initial-scale=1, user-scalable=no" name=viewport>
         <link href="css/common.css" rel="stylesheet" type="text/css">
-        <% //POSTフォームデータ受信 "bbc"へ代入
+          <title>TwitterBBC</title>
+        <%
+        //POSTフォームデータ受信 "bbc"へ代入
         String bbc = null,ip = null;
         request.setCharacterEncoding("UTF-8");
-        if(!(request.getParameter("bbcfm") == null)){
+        if(!(request.getParameter("bbcfm") == "")){
           bbc = request.getParameter("bbcfm");
           ip = request.getRemoteAddr();
-        }
-        if(!(bbc == null)){
-          out.println( "<title>TwitterBBC -" + bbc + "-</title>");
-        } else {
-          out.println( "<title>TwitterBBC</title>");
         }
         //以下DB接続
         Class.forName("com.mysql.jdbc.Driver");
@@ -79,9 +75,9 @@
               /*8秒ごとにリロード
               リクエストが多数発生するため手法を要件等
               */
-              setTimeout(function () {
+              /*setTimeout(function () {
                 window.location.reload(true);
-              }, 10000);
+              }, 10000);*/
             }
           </script>
         </head>
