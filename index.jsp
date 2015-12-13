@@ -14,8 +14,12 @@
         //POSTフォームデータ受信 "bbc"へ代入
         String bbc = null,ip = null;
         request.setCharacterEncoding("UTF-8");
-        if(!(request.getParameter("bbcfm") == "")){
+        if(!(request.getParameter("bbcfm") == "") && !(request.getParameter("bbcfm") == null)){
           bbc = request.getParameter("bbcfm");
+          bbc.trim();
+          /*while(bbc.charAt(0) == "　"){
+
+          }*/
           ip = request.getRemoteAddr();
         }
         //以下DB接続
