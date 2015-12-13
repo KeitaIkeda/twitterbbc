@@ -13,10 +13,8 @@
         request.setCharacterEncoding("UTF-8");
         if(!(request.getParameter("bbcfm") == null) && !(request.getParameter("bbcfm") == "")){
           bbc = request.getParameter("bbcfm");
-          bbc.trim();
-          /*while(bbc.charAt(0) == "　"){
-
-          }*/
+          bbc = bbc.trim();
+          bbc = bbc.replaceAll("^　*", "").replaceAll("　*$", "");
           ip = request.getRemoteAddr();
         }
         //以下DB接続
