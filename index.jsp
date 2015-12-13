@@ -62,7 +62,7 @@
           helpmsg = "ヘルプを表示します。";
           helpflg=1;
         }*/
-
+        //内容表示用の配列を宣言。要素数は投稿の有無により変化
         int bbcnum[] = new int[num];
         String bbcmsg[] = new String[num];
         String bbcip[] = new String[num];
