@@ -8,6 +8,7 @@
         <link href="css/common.css" rel="stylesheet" type="text/css">
           <title>TwitterBBC</title>
         <%
+
         //POSTフォームデータ受信 "bbc"へ代入
         String bbc = null,ip = null;
         request.setCharacterEncoding("UTF-8");
@@ -17,6 +18,7 @@
           bbc = bbc.replaceAll("^　*", "").replaceAll("　*$", "");
           ip = request.getRemoteAddr();
         }
+
         //以下DB接続
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/twitterbbc", "twitterbbc", "twitterbbc");
@@ -68,6 +70,7 @@
         String bbcip[] = new String[num];
         Timestamp bbctime[] = new Timestamp[num];
         String bbctimestr[] = new String[num];
+        String bbc_url[] = new String[num];
         %>
           <script>
             window.onload = function () {
@@ -101,11 +104,13 @@
             <div id="htmlfm">
               <form action="index.jsp" name="bbc" onsubmit="return fmchk();">
                 <input name="bbcfm" placeholder="今の気持ちは？" type="text">
-                  <input formmethod="post" id="fm" type="submit" value="投稿しような"></form>
+                <input formmethod="post" id="fm" type="submit" value="投稿しような"></form>
+                <div id="out">
                   <output></output>
                 </div>
-                <article>
-                  <%
+              </div>
+              <article>
+              <%
                   //投稿の有無を確認する
                   rs1 = stmt.executeQuery("select * from bbc;");
                   boolean isExists = rs1.next();
@@ -123,10 +128,27 @@
                        bbcip[cnt] = rs1.getString("ip");
                        bbctime[cnt] = rs1.getTimestamp("date");
                        bbctimestr[cnt] = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(bbctime[cnt]);
+
+                       //URL抽出パターンマッチ
+                       String regex = "(http://|https://){1}[\\w\\.\\-/:\\#\\?\\=\\&\\;\\%\\~\\+]+";
+                       Pattern p = Pattern.compile(regex);
+                       Matcher m = p.matcher(bbcmsg[cnt]);
+                       for(int i = 1;m.find();i++){
+                         if(i == 1){
+                           bbc_url[cnt] = "<a href='" + m.group() + "' target = '_blank'>URL:" + i + "番目</a><br>";
+                         } else {
+                           bbc_url[cnt] += "<a href='" + m.group() + "' target = '_blank'>URL:" + i + "番目</a><br>";
+                         }
+                       }
+                       //bbc = bbc.replaceAll("(http://|https://){1}[\\w\\.\\-/:\\#\\?\\=\\&\\;\\%\\~\\+]+", "");
                        cnt++;
                      }
                      for(int y = num - 1; y >= 0; y--){
-                       out.println("<div class='bbc'><p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + " from " + bbcip[y] + "</p></div>");
+                       if(bbc_url[y] == null){
+                         out.println("<div class='bbc'><p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + " from " + bbcip[y] + "</p></div>");
+                       }else{
+                         out.println("<div class='bbc'><p>" + bbcnum[y] + " -- " + bbcmsg[y] + "<br>" + bbctimestr[y] + " from " + bbcip[y] + "</p>" + bbc_url[y] + "</div>");
+                       }
                      }
                    }
                    //コネクションをクローズ
@@ -145,11 +167,11 @@
                      response.sendRedirect(url);
                    }
                    %>
-                </article>
-                <footer>
-                  <p>Copyright&copy;2015 Keita Ikeda All Rights Reserved</p>
-                </footer>
-              </div>
-            </body>
+              </article>
+              <footer>
+                <p>Copyright&copy;2015 Keita Ikeda All Rights Reserved</p>
+              </footer>
+            </div>
+          </body>
 
-          </html>
+        </html>
