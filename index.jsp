@@ -104,13 +104,13 @@
             <div id="htmlfm">
               <form action="index.jsp" name="bbc" onsubmit="return fmchk();">
                 <input name="bbcfm" placeholder="今の気持ちは？" type="text">
-                <input formmethod="post" id="fm" type="submit" value="投稿しような"></form>
-                <div id="out">
-                  <output></output>
+                  <input formmethod="post" id="fm" type="submit" value="投稿しような"></form>
+                  <div id="out">
+                    <output></output>
+                  </div>
                 </div>
-              </div>
-              <article>
-              <%
+                <article>
+                <%
                   //投稿の有無を確認する
                   rs1 = stmt.executeQuery("select * from bbc;");
                   boolean isExists = rs1.next();
@@ -167,11 +167,11 @@
                      response.sendRedirect(url);
                    }
                    %>
-              </article>
-              <footer>
-                <p>Copyright&copy;2015 Keita Ikeda All Rights Reserved</p>
-              </footer>
-            </div>
-          </body>
+                </article>
+                <footer>
+                  <p>Copyright&copy;2015 Keita Ikeda All Rights Reserved</p>
+                </footer>
+              </div>
+            </body>
 
-        </html>
+          </html>
