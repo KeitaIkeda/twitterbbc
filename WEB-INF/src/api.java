@@ -29,15 +29,15 @@ public class api extends HttpServlet {
           msg = rs.getString("msg");
           ip = rs.getString("ip");
 
-          out.println("{");
-          out.println("\"num\": " + num + ",");
-          out.println("\"msg\": " + msg + ",");
-          out.println("\"ip\": " + ip);
+          out.println("  {");
+          out.println("    \"num\": \"" + num + "\",");
+          out.println("    \"msg\": \"" + msg + "\",");
+          out.println("    \"ip\": \"" + ip + "\"");
           i++;
           if(i == 30){
-            out.println("}");
+            out.println("  }");
           } else {
-            out.println("},");
+            out.println("  },");
           }
         }
         } else {
@@ -50,15 +50,15 @@ public class api extends HttpServlet {
             msg = rs.getString("msg");
             ip = rs.getString("ip");
 
-            out.println("{");
-            out.println("\"num\": " + num + ",");
-            out.println("\"msg\": " + msg + ",");
-            out.println("\"ip\": " + ip);
+            out.println("  {");
+            out.println("    \"num\": \"" + num + "\",");
+            out.println("    \"msg\": \"" + msg + "\",");
+            out.println("    \"ip\": \"" + ip + "\"");
             i++;
             if(i == cnt){
-              out.println("}");
+              out.println("  }");
             } else {
-              out.println("},");
+              out.println("  },");
             }
           }
       }
